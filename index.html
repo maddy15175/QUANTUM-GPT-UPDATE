@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quantum GPT</title>
+</head>
+<body>
+  <h1>Quantum GPT Chatbot</h1>
+  <textarea id="input" rows="4" cols="50" placeholder="Ask anything..."></textarea><br>
+  <button onclick="sendMessage()">Send</button>
+  <div id="response" style="margin-top: 20px; white-space: pre-line;"></div>
+
+  <script>
+    async function sendMessage() {
+      const msg = document.getElementById("input").value;
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: msg })
+      });
+      const data = await res.json();
+      document.getElementById("response").innerText = data.response || data.error;
+    }
+  </script>
+</body>
+</html>
